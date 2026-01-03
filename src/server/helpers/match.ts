@@ -74,8 +74,13 @@ function scoreRoute(routePath: string) {
   const parts = routePath.split('/').filter(Boolean);
 
   let score = 0;
+  // Root path
+  if(parts.length === 0) score = Infinity;
   for (const part of parts) {
-    if (part.startsWith('[...')) score += 0;
+    // Optional catch-all
+    if (part.startsWith('[[...')) score += -1;
+    // Catch-all
+    else if (part.startsWith('[...')) score += 2;
     else if (part.startsWith('[')) score += 2;
     else score += 3;
   }
