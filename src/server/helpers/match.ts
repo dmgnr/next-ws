@@ -58,7 +58,7 @@ export function findMatchingRoute(
   };
 
   const sortedRoutes = Object.entries(appPathRoutes)
-    .filter(([routePath, file]) => routePath && file)
+    .filter(([routePath, file]) => routePath && file?.length)
     .sort(([a], [b]) => scoreRoute(b) - scoreRoute(a));
 
   for (const [routePath, [filePath]] of sortedRoutes) {
@@ -80,7 +80,7 @@ function scoreRoute(routePath: string) {
     // Optional catch-all
     if (part.startsWith('[[...')) score += -1;
     // Catch-all
-    else if (part.startsWith('[...')) score += 2;
+    else if (part.startsWith('[...')) score += 0;
     else if (part.startsWith('[')) score += 2;
     else score += 3;
   }
